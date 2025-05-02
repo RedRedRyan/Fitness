@@ -1,0 +1,57 @@
+### Unity Image Files ###
+*.png
+*.jpg
+*.jpeg
+*.tga
+*.tif
+*.tiff
+*.bmp
+*.gif
+*.psd
+*.exr
+*.hdr
+*.iff
+*.pict
+*.pct
+*.dds
+*.thm
+*.svg
+*.meta  # Preserve .meta files
+
+### Shaders & Graph Assets ###
+*.shader
+*.shadergraph
+*.shadergraphvariants
+*.compute
+*.raytrace
+*.asset  # Ignores all .asset files (except those explicitly tracked)
+
+### Standard Unity Ignore ###
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Ll]ibrary/
+[Pp]ackages/
+[Ss]ettings/
+[Aa]ssets/TextMesh Pro/
+[Aa]ssets/Resources/UI/
+[Pp]rojectSettings/
+[Uu]serSettings/
+!/Packages/manifest.json  # Critical for Unity
+!/Packages/packages-lock.json  # Optional
+
+### IDE/Editor ###
+.vs/
+.vscode/
+.idea/
+*.sln
+*.csproj
+*.userprefs
+
+### OS Junk ###
+.DS_Store
+Thumbs.db
