@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using Unity.VisualScripting;
+using WalletConnectUnity.Core.Networking;
 
 namespace Thirdweb.Unity
 {
@@ -67,7 +68,13 @@ namespace Thirdweb.Unity
                     statusText.text = "Please enter a valid email address";
                 return;
 
-                var InAppWalletOptions = new InAppWalletOptions(email: emailInputField.text);
+                
+            }
+            try
+            {
+                if (statusText != null)
+                    statusText.text = "Connecting...";
+                    var InAppWalletOptions = new InAppWalletOptions(email: emailInputField.text);
                 var options = new WalletOptions(
                     provider: WalletProvider.InAppWallet,
                     chainId: chainId,
@@ -79,11 +86,6 @@ namespace Thirdweb.Unity
                 {
                     HandleSuccessfulConnection(wallet);
                 }
-            }
-            try
-            {
-                if (statusText != null)
-                    statusText.text = "Connecting...";
             }
             catch (System.Exception e)
             {
@@ -169,6 +171,41 @@ namespace Thirdweb.Unity
             ? $"{address.Substring(0, 6)}...{address.Substring(address.Length - 4)}"
             : address;
         }
-        private async void  CheckExistingConnection();
+        private async void CheckExistingConnection()
+        {
+            try
+            {
+                //Check if a wallet is already connected from previous sessions
+                var Wallet = ThirdwebManager.Instance.GetActiveWallet();
+                if (Wallet != null)
+                {
+                    //Hide connect wallet button
+                    if (connectWalletButton != null)
+                        connectWalletButton.gameObject.SetActive(false);
+                    //Hide email input canvas
+                    if (emailInputCanvas != null)
+                        emailInputCanvas.SetActive(false);
+                    //Show wallet info panel
+                    if (walletInfoPanel != null)
+                        walletInfoPanel.SetActive(true);
+                    //Get and Display wallet address
+                    var address = await Wallet.GetAddress();
+                    if (walletAddressText != null)
+                    {
+                        string formattedAddress = FormatAddress(address);
+                        walletAddressText.text = $"Wallet Address: {formattedAddress}";
+                    }
+                    //Get and Display wallet balance
+                    await UpdateWalletBalance(Wallet);
+                    
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Error checking existing connection: {e.Message}");
+                if (statusText != null)
+                    statusText.text = "Error checking wallet connection";
+            }
+        }
         }
 }
