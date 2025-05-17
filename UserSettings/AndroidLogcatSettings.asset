@@ -67,6 +67,17 @@
         "DisplayIdEnabled": false,
         "DisplayId": ""
     },
+    "m_ScreenCaptureSettings": {
+        "Mode": 0,
+        "m_LastSaveLocation": [
+            "C:\\Users\\Dell\\SQ",
+            "C:\\Users\\Dell\\SQ"
+        ]
+    },
+    "m_QueryLayoutSettings": {
+        "LastLayoutSaveLocation": "",
+        "LastScreenshotSaveLocation": ""
+    },
     "m_InputSettings": {
         "ShiftModifier": false,
         "SendText": "",
