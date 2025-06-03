@@ -16,13 +16,15 @@ namespace Thirdweb.Unity
         [SerializeField] private TMP_InputField emailInputField;
         [SerializeField] private Button emailSubmitButton;
         [SerializeField] TMP_Text statusText;
-        [SerializeField] private ulong chainId = 1115;
+        [SerializeField] private ulong chainId = 1114;
 
         [Header("Wallet Info Display")]
         [SerializeField] private GameObject walletInfoPanel;
         [SerializeField] private TMP_Text walletAddressText;
         [SerializeField] private TMP_Text walletBalanceText;
         [SerializeField] private Button refreshBalanceButton;
+        [SerializeField] private TMP_Text fullwalletAddressText;
+        
 
         private void Start()
         {
@@ -116,7 +118,10 @@ namespace Thirdweb.Unity
                 {
                     string formattedAddress = FormatAddress(address);
                     walletAddressText.text = $"Wallet Address: {formattedAddress}";
+                    fullwalletAddressText.text = $" {address}";
+
                 }
+
                 //Get and Display wallet balance
                 await UpdateWalletBalance(wallet);
             }
@@ -126,6 +131,7 @@ namespace Thirdweb.Unity
                 if (statusText != null)
                     statusText.text = "Error displaying wallet info";
             }
+            Debug.Log($"Full Address: {fullwalletAddressText.text}");
         }
         private async System.Threading.Tasks.Task UpdateWalletBalance(IThirdwebWallet wallet)
         {
