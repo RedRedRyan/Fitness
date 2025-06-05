@@ -17,6 +17,8 @@ namespace Thirdweb.Unity
         [SerializeField] private Button emailSubmitButton;
         [SerializeField] TMP_Text statusText;
         [SerializeField] private ulong chainId = 1114;
+        [SerializeField] private GameObject welcomePanel;
+        [SerializeField] private GameObject homePanel;
 
         [Header("Wallet Info Display")]
         [SerializeField] private GameObject walletInfoPanel;
@@ -121,6 +123,12 @@ namespace Thirdweb.Unity
                     fullwalletAddressText.text = $" {address}";
 
                 }
+                //Set welcome panel inactive
+                if (welcomePanel != null)
+                    welcomePanel.SetActive(false);
+                //Set home panel active
+                if (homePanel != null)
+                    homePanel.SetActive(true);
 
                 //Get and Display wallet balance
                 await UpdateWalletBalance(wallet);
