@@ -73,23 +73,7 @@ namespace Thirdweb.Unity
             if (statusText != null)
                 statusText.text = "Enter your email to connect";
         }
-        private void CopyFullAddressToClipboard()
-        {
-            if (fullwalletAddressText != null && !string.IsNullOrEmpty(fullwalletAddressText.text))
-            {
-                GUIUtility.systemCopyBuffer = fullwalletAddressText.text;
-                if (statusText != null)
-                    statusText.text = "Wallet address copied to clipboard!";
-                StartCoroutine(ClearStatusTextAfterDelay(2f));
-            }
 
-        }
-        private IEnumerator ClearStatusTextAfterDelay(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            if (statusText != null)
-                statusText.text = string.Empty;
-        }
         private async void ConnectWithEmail()
         {
             if (emailInputField == null || string.IsNullOrEmpty(emailInputField.text))
@@ -145,7 +129,7 @@ namespace Thirdweb.Unity
                 if (walletAddressText != null)
                 {
                     string formattedAddress = FormatAddress(address);
-                    walletAddressText.text = $"Wallet Address: {formattedAddress}";
+                    walletAddressText.text = $"{formattedAddress}";
                     fullwalletAddressText.text = $" {address}";
 
                 }
@@ -247,6 +231,40 @@ namespace Thirdweb.Unity
                     statusText.text = "Error checking wallet connection";
             }
         }
-        
+        private void CopyFullAddressToClipboard()
+        {
+            if (fullwalletAddressText != null && !string.IsNullOrEmpty(fullwalletAddressText.text))
+            {
+                Image buttonImage = copyAddressButton.GetComponent<Image>();
+                Color originalColor = buttonImage != null ? buttonImage.color : Color.white;
+                GUIUtility.systemCopyBuffer = fullwalletAddressText.text;
+
+                //Success button colour
+                if (buttonImage != null)
+                {
+                    buttonImage.color = new Color(0.4f, 1f, 0.4f); //Light Green
+                }
+                //status
+                if (statusText != null)
+                {
+                    statusText.text = "Wallet address copied to clipboard!";
+                }
+                StartCoroutine(RevertButtonColorAfterDelay(1f, buttonImage, originalColor));
+
+            }
         }
+        private IEnumerator RevertButtonColorAfterDelay(float delay, Image buttonImage, Color originalColor)
+        {
+            yield return new WaitForSeconds(delay);
+            if (buttonImage != null)
+            {
+                buttonImage.color = originalColor;
+            }
+            if (statusText != null)
+            {
+                statusText.text = string.Empty;
+            }
+
+        }
+    }
 }
